@@ -1,6 +1,4 @@
-# cardiohealth (quasar-estoque-supabase)
 
-projeto medicina
 
 ## Install the dependencies
 ```bash
