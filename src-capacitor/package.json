@@ -1,0 +1,13 @@
+{
+  "name": "zenith-tanque",
+  "version": "0.0.1",
+  "description": "zenith - tanque para peixe",
+  "author": "jubarex <juliano@notari.com.br>",
+  "private": true,
+  "dependencies": {
+    "@capacitor/android": "^5.7.0",
+    "@capacitor/app": "^5.0.0",
+    "@capacitor/cli": "^5.0.0",
+    "@capacitor/core": "^5.0.0"
+  }
+}
