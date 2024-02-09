@@ -357,11 +357,11 @@ export default defineComponent({
 }
 
 .circle-high {
-  background-color: green; /* Defina a cor para valores altos */
+  background-color: red; /* Defina a cor para valores altos */
 }
 
 .circle-medium {
-  background-color: orange; /* Defina a cor para valores médios */
+  background-color: green; /* Defina a cor para valores médios */
 }
 
 .circle-low {
