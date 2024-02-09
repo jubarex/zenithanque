@@ -1,7 +1,6 @@
 <template>
   <q-page padding>
     <!-- todo: fazer uma landing page aqui -->
-    <!-- colocar um botão que manda pra página MedHome no header -->
   </q-page>
 </template>
 

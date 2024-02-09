@@ -8,6 +8,7 @@
             src="../assets/logo-zenith-transparente.png"
             fit="scale-down"
             height="75px"
+            style="margin-left: 12px"
             @click="router.push({ name: 'me' })"
           />
         </q-toolbar-title>

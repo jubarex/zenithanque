@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page padding class="bg-white">
     <q-form class="row justify-center" @submit.prevent="handleLogin">
       <p class="text-h4 text-center col-12 q-pa-md">
         Bom te ver novamente! 😊🎣
@@ -64,6 +64,12 @@
     </q-form>
   </q-page>
 </template>
+
+<style scoped>
+body {
+  background: none !important;
+}
+</style>
 
 <script>
 import { defineComponent, ref, onMounted } from "vue";

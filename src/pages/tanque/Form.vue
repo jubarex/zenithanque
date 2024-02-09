@@ -1,6 +1,6 @@
 <!-- Página de formulárioo do tanque -->
 <template>
-  <q-page padding>
+  <q-page padding class="bg-white">
     <div class="row justify-center">
       <div class="col-12 text-center">
         <p class="text-h6">

@@ -1,130 +1,129 @@
 <template>
   <q-page>
-    <div class="row justify-center">
-      <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
-        <p
-          class="full-width q-pa-sm q-pt-lg text-left text-caption"
-          v-if="user"
+    <div class="full-width justify-center">
+      <div class="col-sm-12 q-gutter-xs q-pa-md">
+        <div class="full-width text-center">
+          <span class="text-h6">
+            <span class="spanLineBehind"></span>
+            <span class="moon-emoji h3LineBehind" @click="moonDialog = true">{{
+              mostrarEmojiLua(faseDaLua)
+            }}</span>
+          </span>
+        </div>
+
+        <q-card
+          v-for="aviso in avisos"
+          :key="aviso.id"
+          class="col-sm-3 q-mt-md"
         >
-          {{ user.email }}
-        </p>
+          <q-card-section class="bg-warning q-pa-sm">
+            <div class="text-h6">{{ aviso.nome }}</div>
+            <div class="text-subtitle2">{{ aviso.endereco }}</div>
+            <div class="text-body2">{{ aviso.mensagem }}</div>
+            <div class="text-caption">Tempo: {{ aviso.tempo_atual }}</div>
+            <div class="text-caption">Data: {{ aviso.data_atual }}</div>
+          </q-card-section>
+        </q-card>
 
-        <div class="q-pa-sm full-width">
-          <span class="text-h6"
-            >Fase da Lua Atual: {{ faseDaLua.toFixed(2) }}</span
-          >
-          <br />
-          <span class="text-caption">(0 = lua nova, 0.5 = lua cheia)</span>
-        </div>
-        <div class="full-width q-pa-sm">
-          <span class="text-h6">Avisos:</span>
-          <div class="col-sm-3 bg-negative q-mt-md q-pa-sm">
-            <span>Tanque 1 - Cascavel, PR</span>
-            <br />
-            <span>PH muito elevado</span>
-          </div>
-          <div class="col-sm-3 bg-negative q-mt-md q-pa-sm">
-            <span>Tanque 35 - Salvador, BA</span>
-            <br />
-            <span>PH muito elevado</span>
-          </div>
-          <div class="col-sm-3 bg-warning q-mt-md q-pa-sm">
-            <span>Tanque 12 - Santa Tereza, PR</span>
-            <br />
-            <span>PH instável</span>
-          </div>
-        </div>
-
-        <div class="full-width q-pt-md">
+        <div class="full-width row q-mt-md">
           <q-btn
-            label="Cadastro de Tanque"
+            label="Cadastrar novo Tanque"
             color="dark"
-            class="full-width"
+            class="col-sm-6 q-pr-sm"
             rounded
-            size="lg"
+            size="md"
             to="/tanque"
           />
-        </div>
-        <div class="full-width">
+
           <q-btn
-            label="DEMONSTRAÇÃO: Cadastro Manual de Dados"
-            color="dark"
-            class="full-width text-caption"
+            label="Cadastro Manual de Dados"
+            color="secondary"
+            class="col-sm-6"
             rounded
-            size="sm"
-            to="/Tanque"
+            size="md"
+            to="/hardware"
           />
         </div>
-        <!-- <div class="full-width">
-          <q-btn
-            label="Dispositivo"
-            color="primary"
-            class="full-width"
-            rounded
-            size="lg"
-            to="/dispositivo"
-          />
-        </div> -->
-        <div class="full-width">
-          <!-- <q-btn
-            label="Paciente"
-            color="primary"
-            class="full-width"
-            rounded
-            size="lg"
-            to="/PacienteHome"
-          /> -->
-          <div>
-            <!-- a -->
-            <q-card v-for="tanque in tanques" :key="tanque.id" class="q-mb-md">
-              <q-card-section>
-                <div class="text-h6">{{ tanque.nome_tanque }}</div>
-                <div class="text-subtitle2">{{ tanque.endereco }}</div>
+
+        <div class="full-width q-pt-sm">
+          <div class="row">
+            <q-card
+              v-for="tanque in tanques"
+              :key="tanque.id"
+              class="col-12 col-sm-6 col-md-4 q-mb-md"
+            >
+              <q-card-section class="tanque-info">
+                <q-item-label class="tanque-name text-h6">{{
+                  tanque.nome_tanque
+                }}</q-item-label>
+                <q-item-label class="tanque-address text-subtitle2">{{
+                  tanque.endereco
+                }}</q-item-label>
               </q-card-section>
 
               <q-separator />
 
-              <q-card-section>
-                <q-item>
-                  <q-item-section>
-                    <div class="text-weight-medium">pH:</div>
-                  </q-item-section>
-                  <q-item-section v-if="tanque.ph">
-                    <div
-                      class="circle"
-                      :class="getPHCircleClass(tanque.ph)"
-                    ></div>
-                    {{ tanque.ph }}
-                  </q-item-section>
-                  <q-item-section v-else> Aguardando Dados </q-item-section>
-                </q-item>
+              <q-card-section class="tanque-details">
+                <div
+                  v-if="tanque.ph || tanque.temperatura || tanque.oxigenacao"
+                >
+                  <q-item v-if="tanque.ph">
+                    <q-item-section>
+                      <q-item-label class="tanque-label text-weight-medium"
+                        >pH:</q-item-label
+                      >
+                    </q-item-section>
+                    <q-item-section>
+                      <div class="d-flex align-center">
+                        <div
+                          class="circle mr-xs"
+                          :class="getPHCircleClass(tanque.ph)"
+                        ></div>
+                        <q-item-label>{{ tanque.ph }}</q-item-label>
+                      </div>
+                    </q-item-section>
+                  </q-item>
 
-                <q-item>
-                  <q-item-section>
-                    <div class="text-weight-medium">Temperatura:</div>
-                  </q-item-section>
-                  <q-item-section v-if="tanque.temperatura">
-                    <div
-                      class="circle"
-                      :class="getTemperatureCircleClass(tanque.temperatura)"
-                    ></div>
-                    {{ tanque.temperatura }}°C
-                  </q-item-section>
-                  <q-item-section v-else> Aguardando Dados </q-item-section>
-                </q-item>
+                  <q-item v-if="tanque.temperatura">
+                    <q-item-section>
+                      <q-item-label class="tanque-label text-weight-medium"
+                        >Temperatura:</q-item-label
+                      >
+                    </q-item-section>
+                    <q-item-section>
+                      <div class="d-flex align-center">
+                        <div
+                          class="circle mr-xs"
+                          :class="getTemperatureCircleClass(tanque.temperatura)"
+                        ></div>
+                        <q-item-label>{{ tanque.temperatura }}°C</q-item-label>
+                      </div>
+                    </q-item-section>
+                  </q-item>
 
-                <q-item>
+                  <q-item v-if="tanque.oxigenacao">
+                    <q-item-section>
+                      <q-item-label class="tanque-label text-weight-medium"
+                        >Oxigenação:</q-item-label
+                      >
+                    </q-item-section>
+                    <q-item-section>
+                      <div class="d-flex align-center">
+                        <div
+                          class="circle mr-xs"
+                          :class="getOxigenacaoCircleClass(tanque.oxigenacao)"
+                        ></div>
+                        <q-item-label>{{ tanque.oxigenacao }}%</q-item-label>
+                      </div>
+                    </q-item-section>
+                  </q-item>
+                </div>
+                <q-item v-else>
                   <q-item-section>
-                    <div class="text-weight-medium">Oxigenação:</div>
+                    <q-item-label class="tanque-no-data"
+                      >Aguardando Dados</q-item-label
+                    >
                   </q-item-section>
-                  <q-item-section v-if="tanque.oxigenacao">
-                    <div
-                      class="circle"
-                      :class="getOxigenacaoCircleClass(tanque.oxigenacao)"
-                    ></div>
-                    {{ tanque.oxigenacao }}%
-                  </q-item-section>
-                  <q-item-section v-else> Aguardando Dados </q-item-section>
                 </q-item>
               </q-card-section>
             </q-card>
@@ -132,6 +131,22 @@
         </div>
       </div>
     </div>
+
+    <q-dialog v-model="moonDialog" persistent>
+      <q-card>
+        <q-bar class="text-right">
+          <q-space />
+          <q-btn dense flat icon="close" v-close-popup>
+            <q-tooltip>Fechar</q-tooltip>
+          </q-btn>
+        </q-bar>
+
+        <q-card-section>
+          <span>Fase da Lua Atual: </span>
+          <span style="font-weight: bold"> {{ faseDaLua.toFixed(2) }}</span>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -158,6 +173,7 @@ export default defineComponent({
     const quasar$ = useQuasar();
 
     const tanques = ref([]);
+    const avisos = ref([]);
     const { list, remove } = useApi();
     const loading = ref(true);
     const table = "tanque";
@@ -177,8 +193,40 @@ export default defineComponent({
       }
     };
 
+    const handleListAvisos = async () => {
+      try {
+        loading.value = true;
+        // Obtenha os id_hardware dos seus tanques
+        const idHardwares = tanques.value.map((tanque) => tanque.id_hardware);
+
+        // Consulte os avisos filtrando pelo nível e id_hardware
+        avisos.value = (await list("avisos")).filter((aviso) => {
+          return aviso.nivel >= 1 && idHardwares.includes(aviso.id_hardware);
+        });
+
+        loading.value = false;
+      } catch (error) {
+        notifyError(error.message);
+        loading.value = false;
+      }
+    };
+
     const handleEdit = (tanque) => {
       router.push({ name: "form-Tanque", params: { id: tanque.id } });
+    };
+
+    const mostrarEmojiLua = (fase) => {
+      if (fase === 0) {
+        return "🌑"; // Lua Nova
+      } else if (fase < 0.25) {
+        return "🌒"; // Lua Crescente
+      } else if (fase === 0.5) {
+        return "🌕"; // Lua Cheia
+      } else if (fase > 0.5) {
+        return "🌓"; // Lua Minguante
+      } else {
+        return "🌘"; // Lua Crescente
+      }
     };
 
     const handleRemoveTanque = async (tanque) => {
@@ -236,8 +284,17 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      //primeiro exemplo que eu fiz de pedir dados na hora de iniciar
-      handleListTanque();
+      // Primeiro, obtenha os dados dos tanques
+      handleListTanque()
+        .then(() => {
+          // Quando os dados dos tanques estiverem disponíveis, chame handleListAvisos
+          handleListAvisos();
+        })
+        .catch((error) => {
+          // Trate qualquer erro que ocorra ao obter os dados dos tanques
+          notifyError(error.message);
+          loading.value = false;
+        });
     });
 
     const pegarFaseLuaHoje = () => {
@@ -282,6 +339,9 @@ export default defineComponent({
       getOxigenacaoCircleClass,
       getPHCircleClass,
       getTemperatureCircleClass,
+      avisos,
+      mostrarEmojiLua,
+      moonDialog: ref(false),
     };
   },
 });
@@ -289,11 +349,11 @@ export default defineComponent({
 
 <style scoped>
 .circle {
-  width: 10px;
-  height: 10px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
-  display: inline-block;
-  margin-right: 5px;
+  /* display: inline-block; */
+  /* margin-right: 5px; */
 }
 
 .circle-high {
@@ -306,5 +366,12 @@ export default defineComponent({
 
 .circle-low {
   background-color: red; /* Defina a cor para valores baixos */
+}
+
+.moon-emoji {
+  font-size: 32px; /* Tamanho do emoji */
+}
+
+.bg-image {
 }
 </style>

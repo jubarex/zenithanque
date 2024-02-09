@@ -106,17 +106,17 @@ module.exports = configure(function (/* ctx */) {
     framework: {
       config: {
         brand: {
-          primary: "#76b5f5",
-          secondary: "#289e00",
-          accent: "#fbff00",
+          primary: "#607D8B",
+          secondary: "#8BC34A",
+          accent: "#FFC107",
 
-          dark: "#0060bf",
-          "dark-page": "#4d4d4d",
+          dark: "#333333",
+          "dark-page": "#212121",
 
-          positive: "#39e662",
-          negative: "#ff213b",
-          info: "#a3a3a3",
-          warning: "#ff9900",
+          positive: "#8BC34A",
+          negative: "#F44336",
+          info: "#607D8B",
+          warning: "#FF9800",
         },
       },
 
